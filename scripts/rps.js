@@ -1,5 +1,6 @@
 const moves = ["Rock", "Paper", "Scissors"]
 
+// generate a random move for the computer
 function computerPlay()
 {
   let num = Math.floor(3*Math.random())
@@ -8,14 +9,19 @@ function computerPlay()
   return move
 }
 
+// check who wins a given rounds
 function playRound(playerSelection, computerSelection)
 {
+  // flags
   let playerWin = false
   let playerLoss = false
   let tie = false
 
+  // convert user input to sentence case
   playerSelection = playerSelection.substr(0, 1).toUpperCase() + playerSelection.substr(1).toLowerCase()
+  playerWin = playerSelection.trim()
 
+  // different outcomes based on different moves
   if(playerSelection === "Rock")
   {
     if(computerSelection === "Rock")
@@ -98,6 +104,7 @@ function game()
 
     let result = playRound(playerMove, compMove)
 
+    // we check the string returned by playRound to figure out what the actual result was and write it down
     if(result.search("Lose") != -1)
     {
       compScore++
@@ -112,11 +119,17 @@ function game()
     }
     else if(result.search("wrong") != -1)
     {
+      // give them an extra round if they messed up
       i--
     }
 
     console.log(result)
 
+    /* Show overall results
+      Player: #
+      Computer: #
+      Ties: #
+    */
     console.log("Player: " + playerScore + "\nComputer: " + compScore + "\nTies: " + ties)
   }
 
