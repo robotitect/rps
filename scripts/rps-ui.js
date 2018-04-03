@@ -13,17 +13,20 @@ function computerPlay()
 function playRound(playerSelection, computerSelection)
 {
   // flags
-  let playerWin = false
-  let playerLoss = false
-  let tie = false
+  var playerWin = false
+  var playerLoss = false
+  var tie = false
 
   // convert user input to sentence case
   playerSelection = playerSelection.substr(0, 1).toUpperCase() + playerSelection.substr(1).toLowerCase()
   playerWin = playerSelection.trim()
 
+  console.log(playerSelection + " v. " + computerSelection);
+
   // different outcomes based on different moves
   if(playerSelection === "Rock")
   {
+    // console.log(playe)
     if(computerSelection === "Rock")
     {
       tie = true
@@ -70,21 +73,19 @@ function playRound(playerSelection, computerSelection)
 
   let returnString = ""
 
-  if(playerWin)
+  if(playerSelection === "Rock" && computerSelection === "Scissors" ||
+     playerSelection === "Scissors" && computerSelection === "Paper" ||
+     playerSelection === "Paper" && computerSelection === "Rock")
   {
     returnString = "You Win! " + playerSelection + " beats " + computerSelection + "."
   }
-  else if(playerLoss)
-  {
-    returnString = "You Lose! " + computerSelection + " beats " + playerSelection + "."
-  }
-  else if(tie)
+  else if(playerSelection === computerSelection)
   {
     returnString = "Tie!"
   }
   else
   {
-      returnString = "You entered something wrong, try again"
+    returnString = "You Lose! " + computerSelection + " beats " + playerSelection + "."
   }
 
   return returnString
@@ -147,5 +148,29 @@ function game()
   }
 }
 
+const buttons = Array.from(document.getElementsByTagName("button"));
 
-game()
+buttons.forEach(button => button.addEventListener("click", function(e)
+{
+  console.log(button);
+  const result = playRound(button.className, computerPlay());
+
+  // let rounds = 5
+    const scoreP = document.querySelector(".score");
+    const resultP = document.querySelector(".result");
+    let playerScore = parseInt(scoreP.textContent);
+
+
+  // we check the string returned by playRound to figure out what the actual result was and write it down
+  if(result.search("Win") != -1)
+  {
+    playerScore++;
+    scoreP.textContent = playerScore;
+  }
+
+  resultP.textContent = result;
+
+  console.log(result);
+}));
+
+// game()
